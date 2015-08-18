@@ -27,6 +27,9 @@ public class CharacterMovement : MonoBehaviour {
 	public Transform testObject;
 	public Transform testObject2;
 
+	// cheats
+	bool jumpingEnabled;
+
 
 	void Awake(){
 		rb = GetComponent<Rigidbody2D> ();
@@ -48,9 +51,15 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	void Update(){
+
 		animator.SetFloat ("Speed", Mathf.Abs (move));
 
-		if(grounded && Input.GetButtonDown ("Jump")){
+		if (Input.anyKeyDown) {
+			cheat (Input.inputString);
+			Debug.Log (Input.anyKeyDown.ToString ());
+		}
+
+		if(grounded && Input.GetButtonDown ("Jump") || jumpingEnabled && Input.GetButtonDown ("Jump")){
 			rb.AddForce(new Vector2(0, jumpForce));
 		}
 		alignToGround ();
@@ -127,7 +136,14 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 
-
+	void cheat(string button){
+		switch (button) {
+		case "j":
+			jumpingEnabled = true;
+			Debug.Log ("jumpingEnabled:" + jumpingEnabled);
+			break;
+		}
+	}
 
 
 
