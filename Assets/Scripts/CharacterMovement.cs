@@ -56,7 +56,7 @@ public class CharacterMovement : MonoBehaviour {
 
 		if (Input.anyKeyDown) {
 			cheat (Input.inputString);
-			Debug.Log (Input.anyKeyDown.ToString ());
+			//Debug.Log (Input.anyKeyDown.ToString ());
 		}
 
 		if(grounded && Input.GetButtonDown ("Jump") || jumpingEnabled && Input.GetButtonDown ("Jump")){
@@ -106,14 +106,14 @@ public class CharacterMovement : MonoBehaviour {
 
 		//Debug.Log ("v1: " + v1); //--> y changes when jumping. it shouldn't change!!! ??---->>>> It changed because I deleted the layer mask information....... 
 		//Debug.Log ("v2: " + v2);
-		Debug.Log ("theVector: " + theVector);
+		//Debug.Log ("theVector: " + theVector);
 
 		//calculate the vector within the character that represents its local axis
 		Vector2 curRot = new Vector2 (raycaster1.transform.position.x-raycaster2.transform.position.x, raycaster1.transform.position.y-raycaster2.transform.position.y);
 
-		Debug.Log ("curRot: " + curRot);
-		Debug.Log ("theVector.magnitude):" + theVector.magnitude);
-		Debug.Log ("curRot.magnitude:" + curRot.magnitude);
+		//Debug.Log ("curRot: " + curRot);
+		//Debug.Log ("theVector.magnitude):" + theVector.magnitude);
+		//Debug.Log ("curRot.magnitude:" + curRot.magnitude);
 		//Debug.Log ("dotproduct:" + Vector2.Dot (theVector, curRot));
 
 		//calculate the angle between the two vectors.     -->>> the calculation itself returns a cosinus value, so I need to use acos to make it a degree value--but it doesn't work?? I guess it returns  radians, but how the hell can I turn those into degrees?? :( 
@@ -125,10 +125,10 @@ public class CharacterMovement : MonoBehaviour {
 		if (angle > 180) {
 			angle = 360-angle;
 		}
-		Debug.Log ("angle: " + angle);
+		//Debug.Log ("angle: " + angle);
 
 		if(Physics2D.Raycast (ray1.origin, ray1.direction, groundDetectingDistance , whatIsGround.value)){
-			Debug.Log ("rotates");
+			//Debug.Log ("rotates");
 			transform.rotation = Quaternion.identity; //somehow it keeps turning upside down when i don't do that.....
 			transform.Rotate (0, 0, angle, Space.World);
 		}

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum ColorState{
+/*public enum ColorState{
 	red, 
 	green, 
 	blue, 
@@ -99,3 +99,4 @@ public class ColorController : MonoBehaviour {
 
 
 }
+*/
