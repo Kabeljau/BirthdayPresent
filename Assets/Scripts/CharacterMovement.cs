@@ -21,11 +21,8 @@ public class CharacterMovement : MonoBehaviour {
 	public LayerMask whatIsGround;
 
 	//fields for ground-aligning
-	public Transform raycaster1;
-	public Transform raycaster2;
 	public float groundDetectingDistance;
-	public Transform testObject;
-	public Transform testObject2;
+	private Vector3 xAxis = new Vector3(1, 0, 0);
 
 	// cheats
 	bool jumpingEnabled;
@@ -64,6 +61,7 @@ public class CharacterMovement : MonoBehaviour {
 		}
 		alignToGround ();
 
+
 	}
 
 	void flip(){
@@ -75,6 +73,71 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	void alignToGround(){
+		Vector3 down = -transform.up;
+		Ray2D ray = new Ray2D (new Vector2 (transform.position.x, transform.position.y+4), new Vector2 (down.x, down.y));
+		RaycastHit2D hit = Physics2D.Raycast (ray.origin, ray.direction, groundDetectingDistance, whatIsGround.value);
+		Vector2 newDown = -hit.normal;
+		float angle = ((newDown.x*down.x + down.y * newDown.y) / (newDown.magnitude * down.magnitude));
+		angle = Mathf.Acos (angle); 
+		angle *= Mathf.Rad2Deg;
+
+		if (Mathf.Abs (angle) < 70 && angle != 0) {
+			if(Mathf.Acos((newDown.x*xAxis.x + xAxis.y * newDown.y) / (newDown.magnitude * xAxis.magnitude))*Mathf.Rad2Deg < 90){
+				Debug.Log ("direction of newDown is negative");
+				Debug.Log ("angle with xAxis: " + Mathf.Acos((newDown.x*xAxis.x + xAxis.y * newDown.y) / (newDown.magnitude * xAxis.magnitude))*Mathf.Rad2Deg);
+				Vector3 hitPoint = new Vector3(hit.point.x, hit.point.y, 0);
+				Debug.DrawLine (new Vector3(hit.point.x -20, hit.point.y, 0), hitPoint + 20 * xAxis, Color.white);
+				angle = -angle;
+			}
+
+			//transform.eulerAngles = new Vector3 (0, 0, angle);
+
+			//transform.Rotate(new Vector3(0, 0, 1), angle);
+			//transform.Rotate (new Vector3(0, 0, angle));
+			//transform.Rotate (0, 0, angle);
+			//transform.Rotate (new Vector3(0, 0, angle));
+		}
+
+
+		Debug.Log ("angle: " + angle);
+		Debug.DrawLine (transform.position, new Vector3(transform.position.x + down.x * 1000, transform.position.y + down.y * 1000, 0), Color.red); //the normal vector of the character
+		Debug.DrawLine (transform.position, new Vector3(transform.position.x + newDown.x * 1000, transform.position.y + newDown.y * 1000, 0), Color.green); //the normal vector of the ground
+
+
+	}
+
+	void cheat(string button){
+		switch (button) {
+		case "j":
+			jumpingEnabled = true;
+			Debug.Log ("jumpingEnabled:" + jumpingEnabled);
+			break;
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/*void alignToGround2(){
+		deleted inspector fields
+		 * 
+		public Transform testObject;
+		public Transform testObject2;
+		
+	public Transform raycaster1;
+	public Transform raycaster2;
+	
 		// the plan is: have two points next to each other in the character and calculate the vector(here called curRot) between them. 
 		//from each point a ray is cast straight downwards. 
 		// when the two rays hit a collider, a vector is drawn between the hitpoints.
@@ -133,22 +196,14 @@ public class CharacterMovement : MonoBehaviour {
 			transform.Rotate (0, 0, angle, Space.World);
 		}
 
-	}
+		Vector3 fwd = transform.right;
+		//Debug.DrawLine (transform.position, transform.position + fwd * 100);
+		Vector3 d = -transform.up;
+		Debug.DrawLine (transform.position, transform.position + d * 100);
+		Debug.DrawLine (raycaster1.transform.position, raycaster2.transform.position);
+		Debug.Log ("fwdpoint: " + (transform.position + fwd * 100));
 
-
-	void cheat(string button){
-		switch (button) {
-		case "j":
-			jumpingEnabled = true;
-			Debug.Log ("jumpingEnabled:" + jumpingEnabled);
-			break;
-		}
-	}
-
-
-
-
-
+	}*/
 
 
 }
