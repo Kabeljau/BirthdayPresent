@@ -16,8 +16,9 @@ public class CharacterMovement : MonoBehaviour {
 
 	//fields for jumping
 	bool grounded = true;
-	public Transform groundCheck;
-	float groundRadius = 0.002f;
+	public Transform groundCheckLeft;
+	public Transform groundCheckRight;
+	float groundRadius = 0.1f;
 	public LayerMask whatIsGround;
 
 	//fields for ground-aligning
@@ -34,7 +35,7 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-		grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, whatIsGround);
+
 
 		move = Input.GetAxis ("Horizontal");
 
@@ -48,6 +49,12 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	void Update(){
+		if (Physics2D.OverlapCircle (groundCheckLeft.position, groundRadius, whatIsGround) || Physics2D.OverlapCircle (groundCheckRight.position, groundRadius, whatIsGround)) {
+			grounded = true;
+		} else {
+			grounded = false;
+		}
+
 
 		animator.SetFloat ("Speed", Mathf.Abs (move));
 
@@ -58,6 +65,11 @@ public class CharacterMovement : MonoBehaviour {
 
 		if(grounded && Input.GetButtonDown ("Jump") || jumpingEnabled && Input.GetButtonDown ("Jump")){
 			rb.AddForce(new Vector2(0, jumpForce));
+		}
+		if (grounded) {
+			rb.fixedAngle = false;
+		} else {
+			rb.fixedAngle= true;
 		}
 		alignToGround ();
 
@@ -73,6 +85,7 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	void alignToGround(){
+		//transform.rotation = Quaternion.identity;
 		Vector3 down = -transform.up;
 		Ray2D ray = new Ray2D (new Vector2 (transform.position.x, transform.position.y+4), new Vector2 (down.x, down.y));
 		RaycastHit2D hit = Physics2D.Raycast (ray.origin, ray.direction, groundDetectingDistance, whatIsGround.value);
@@ -81,25 +94,33 @@ public class CharacterMovement : MonoBehaviour {
 		angle = Mathf.Acos (angle); 
 		angle *= Mathf.Rad2Deg;
 
+		if(Mathf.Acos((newDown.x*xAxis.x + xAxis.y * newDown.y) / (newDown.magnitude * xAxis.magnitude))*Mathf.Rad2Deg < 90){
+			//Debug.Log ("direction of newDown is negative");
+			//Debug.Log ("angle with xAxis: " + Mathf.Acos((newDown.x*xAxis.x + xAxis.y * newDown.y) / (newDown.magnitude * xAxis.magnitude))*Mathf.Rad2Deg);
+			Vector3 hitPoint = new Vector3(hit.point.x, hit.point.y, 0);
+			Debug.DrawLine (new Vector3(hit.point.x -20, hit.point.y, 0), hitPoint + 20 * xAxis, Color.white);
+			angle = -angle;
+		}
+
 		if (Mathf.Abs (angle) < 70 && angle != 0) {
-			if(Mathf.Acos((newDown.x*xAxis.x + xAxis.y * newDown.y) / (newDown.magnitude * xAxis.magnitude))*Mathf.Rad2Deg < 90){
-				Debug.Log ("direction of newDown is negative");
-				Debug.Log ("angle with xAxis: " + Mathf.Acos((newDown.x*xAxis.x + xAxis.y * newDown.y) / (newDown.magnitude * xAxis.magnitude))*Mathf.Rad2Deg);
-				Vector3 hitPoint = new Vector3(hit.point.x, hit.point.y, 0);
-				Debug.DrawLine (new Vector3(hit.point.x -20, hit.point.y, 0), hitPoint + 20 * xAxis, Color.white);
-				angle = -angle;
-			}
 
+			Vector3 newLookDirection = new Vector3(newDown.y, -newDown.x, 0);
+			//Debug.Log ("newLookDirection:" + newLookDirection);
+			//transform.rotation= Quaternion.LookRotation (newLookDirection, new Vector3(0, 1, 0 ));
 			//transform.eulerAngles = new Vector3 (0, 0, angle);
-
 			//transform.Rotate(new Vector3(0, 0, 1), angle);
 			//transform.Rotate (new Vector3(0, 0, angle));
 			//transform.Rotate (0, 0, angle);
 			//transform.Rotate (new Vector3(0, 0, angle));
+
+			Quaternion rot = transform.rotation;
+			rot.SetLookRotation (newLookDirection);
+			//transform.rotation = rot;
+			Debug.DrawLine (transform.position, new Vector3(transform.position.x + newLookDirection.x * 1000, transform.position.y + newLookDirection.y * 1000, 0), Color.blue); 
 		}
 
 
-		Debug.Log ("angle: " + angle);
+	//	Debug.Log ("angle: " + angle);
 		Debug.DrawLine (transform.position, new Vector3(transform.position.x + down.x * 1000, transform.position.y + down.y * 1000, 0), Color.red); //the normal vector of the character
 		Debug.DrawLine (transform.position, new Vector3(transform.position.x + newDown.x * 1000, transform.position.y + newDown.y * 1000, 0), Color.green); //the normal vector of the ground
 
@@ -110,7 +131,7 @@ public class CharacterMovement : MonoBehaviour {
 		switch (button) {
 		case "j":
 			jumpingEnabled = true;
-			Debug.Log ("jumpingEnabled:" + jumpingEnabled);
+			//Debug.Log ("jumpingEnabled:" + jumpingEnabled);
 			break;
 		}
 	}
