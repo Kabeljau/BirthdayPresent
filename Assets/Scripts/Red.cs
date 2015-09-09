@@ -3,6 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Red : ColorVortex {
+
+
+	void Awake(){
+		base.Awake ();
+
+	}
+
+	void Start(){
+		Debug.Log ("colState: " + colState);
+		ownColor = ColorState.red;
+		Debug.Log ("ownColor: " + ownColor);
+		Debug.Log ("colState: " + colState);
+	}
+
+
+}
+
+/*
+ * public class Red : ColorVortex {
 	GameObject[] redFruit;
 	SpriteRenderer[] renderers;
 	Collider2D[] colliders;
@@ -76,3 +95,5 @@ public class Red : ColorVortex {
 		Debug.Log ("event onFadeFinished has happened! Alpha: " + alpha);
 	}
 }
+
+ * */
