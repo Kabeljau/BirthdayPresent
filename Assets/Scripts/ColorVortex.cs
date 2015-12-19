@@ -37,8 +37,6 @@ public class ColorVortex : MonoBehaviour {
 	protected ColorState ownColor;
 
 	public SpriteRenderer alphaParent; //when objects fade in or out, a coroutine is started. all fruit get the same color value as alpha parent (so you need only one coroutine)
-	public delegate void fadeFinished(float alpha);
-	public static event fadeFinished onFadeFinished; //when this event is called, the colliders are activated or deactivated. this way, no objects are destroyed while the coroutine is running
 	public float fadeSpeed = 0.3f;
 	private bool fadeIsRunning = false; //for the fade coroutines
 
@@ -69,7 +67,6 @@ public class ColorVortex : MonoBehaviour {
 		invisible.a = 0;
 		alphaParent.color = invisible;
 
-		onFadeFinished += manageComponents; 
 		OnColorChanged += checkColorState;
 		OnColorChanged += test;
 	}
@@ -155,12 +152,12 @@ public class ColorVortex : MonoBehaviour {
 	}
 
 	void manageComponents(float alpha){
-		if (alpha == 0) {
+		if (alpha < 0.5) {
 			foreach (Collider2D col in colliders) {
 				col.enabled = false;
 			}
 
-		} else if (alpha == 1) {
+		} else if (alpha > 0.5) {
 			foreach (Collider2D col in colliders) {
 				col.enabled = true;
 			}
@@ -174,18 +171,21 @@ public class ColorVortex : MonoBehaviour {
 		Debug.Log ("c.a" + c.a);
 		while (Mathf.Abs (c.a - ren.color.a) > 0.07) {
 			ren.color = Color.Lerp (ren.color, c, speed * Time.deltaTime);
-			Debug.Log ("Coroutine fade is running! alpha: " + ren.color.a);
+			//Debug.Log ("Coroutine fade is running! alpha: " + ren.color.a);
 			yield return null;
 		}
 		ren.color = c;
 		fadeIsRunning = false;
-		Debug.Log ("Coroutine fade stopped!");
-		onFadeFinished (ren.color.a);
+		//Debug.Log ("Coroutine fade stopped!");
+
+
 	}
 
 	protected IEnumerator synchronizeColor(SpriteRenderer[] children, SpriteRenderer parent){
 		while (fadeIsRunning) {
-
+			foreach(Collider2D col in colliders){
+				col.enabled = false;
+			}
 			foreach(SpriteRenderer child in children){
 				child.color = parent.color;
 				//Debug.Log ("alpha parent: " + parent.color.a);
@@ -197,9 +197,10 @@ public class ColorVortex : MonoBehaviour {
 		//Debug.Log ("Coroutine synchronizeColor stopped!");
 		foreach(SpriteRenderer child in children){
 			child.color = parent.color;
-			Debug.Log ("alpha parent: " + parent.color.a);
-			Debug.Log ("alpha child: " + child.color.a);
+			//Debug.Log ("alpha parent: " + parent.color.a);
+			//Debug.Log ("alpha child: " + child.color.a);
 		}
+		manageComponents (parent.color.a);
 	}
 }
 

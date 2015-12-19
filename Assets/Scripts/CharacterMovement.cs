@@ -68,10 +68,11 @@ public class CharacterMovement : MonoBehaviour {
 		}
 		if (grounded) {
 			rb.fixedAngle = false;
+			alignToGround ();
 		} else {
 			rb.fixedAngle= true;
 		}
-		alignToGround ();
+
 
 
 	}
@@ -98,7 +99,7 @@ public class CharacterMovement : MonoBehaviour {
 			//Debug.Log ("direction of newDown is negative");
 			//Debug.Log ("angle with xAxis: " + Mathf.Acos((newDown.x*xAxis.x + xAxis.y * newDown.y) / (newDown.magnitude * xAxis.magnitude))*Mathf.Rad2Deg);
 			Vector3 hitPoint = new Vector3(hit.point.x, hit.point.y, 0);
-			Debug.DrawLine (new Vector3(hit.point.x -20, hit.point.y, 0), hitPoint + 20 * xAxis, Color.white);
+			//Debug.DrawLine (new Vector3(hit.point.x -20, hit.point.y, 0), hitPoint + 20 * xAxis, Color.white);
 			angle = -angle;
 		}
 
@@ -116,13 +117,13 @@ public class CharacterMovement : MonoBehaviour {
 			Quaternion rot = transform.rotation;
 			rot.SetLookRotation (newLookDirection);
 			//transform.rotation = rot;
-			Debug.DrawLine (transform.position, new Vector3(transform.position.x + newLookDirection.x * 1000, transform.position.y + newLookDirection.y * 1000, 0), Color.blue); 
+			//Debug.DrawLine (transform.position, new Vector3(transform.position.x + newLookDirection.x * 1000, transform.position.y + newLookDirection.y * 1000, 0), Color.blue); 
 		}
 
 
 	//	Debug.Log ("angle: " + angle);
-		Debug.DrawLine (transform.position, new Vector3(transform.position.x + down.x * 1000, transform.position.y + down.y * 1000, 0), Color.red); //the normal vector of the character
-		Debug.DrawLine (transform.position, new Vector3(transform.position.x + newDown.x * 1000, transform.position.y + newDown.y * 1000, 0), Color.green); //the normal vector of the ground
+		//Debug.DrawLine (transform.position, new Vector3(transform.position.x + down.x * 1000, transform.position.y + down.y * 1000, 0), Color.red); //the normal vector of the character
+		//Debug.DrawLine (transform.position, new Vector3(transform.position.x + newDown.x * 1000, transform.position.y + newDown.y * 1000, 0), Color.green); //the normal vector of the ground
 
 
 	}
