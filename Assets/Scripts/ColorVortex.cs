@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+/*
 public enum ColorState{
 	red, 
 	green, 
@@ -55,6 +55,11 @@ public class ColorVortex : MonoBehaviour {
 		//set the colorstate to the default state
 		colState = ColorState.noCol;
 
+
+		/*
+	 * ATTENTION,PLEASE!! THIS IS KICKED OUT BECAUSE I CHANGED THE STRUCTURE OF THE CODE. 
+	 * FROM NOW ON, THE ONLY THING IT WILL DO IS TO SET THE CURRENT COLOR STATE 
+	 * INSTEAD OF CONTROLLING TRANSPARENCY AND SO ON OF ALL THE OBJECTS!
 		//find all fruit and create the arrays
 		//I decided to use arrays instead of lists because I have to pass them as parameters into methods and I did not find a 
 		//proper way to do this with Generic Lists.....
@@ -69,6 +74,7 @@ public class ColorVortex : MonoBehaviour {
 
 		OnColorChanged += checkColorState;
 		OnColorChanged += test;
+
 	}
 
 
@@ -138,7 +144,7 @@ public class ColorVortex : MonoBehaviour {
 			obj.GetComponent<Renderer>().enabled = false;
 		}
 	}*/
-
+/*
 	void createArrays(){
 		fruit = GameObject.FindGameObjectsWithTag (fruitTag);
 

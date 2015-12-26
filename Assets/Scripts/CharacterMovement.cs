@@ -15,7 +15,7 @@ public class CharacterMovement : MonoBehaviour {
 	private Animator animator;
 
 	//fields for jumping
-	bool grounded = true;
+	public static bool grounded = true;
 	public Transform groundCheckLeft;
 	public Transform groundCheckRight;
 	float groundRadius = 0.1f;
@@ -32,6 +32,8 @@ public class CharacterMovement : MonoBehaviour {
 	void Awake(){
 		rb = GetComponent<Rigidbody2D> ();
 		animator = GetComponent<Animator> ();
+
+		Enemy.OnTouchedEnemy += stun; 
 	}
 
 	void FixedUpdate(){
@@ -49,6 +51,8 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	void Update(){
+
+		//checks if one of the characters feet touches the ground (I made two ground checkers because it is a quadruped)
 		if (Physics2D.OverlapCircle (groundCheckLeft.position, groundRadius, whatIsGround) || Physics2D.OverlapCircle (groundCheckRight.position, groundRadius, whatIsGround)) {
 			grounded = true;
 		} else {
@@ -77,6 +81,7 @@ public class CharacterMovement : MonoBehaviour {
 
 	}
 
+	//flips the character for walking left/right
 	void flip(){
 		facingRight = !facingRight;
 
@@ -86,27 +91,36 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	void alignToGround(){
-		//transform.rotation = Quaternion.identity;
+
+		//sends a raycast from the player down to the collider
 		Vector3 down = -transform.up;
 		Ray2D ray = new Ray2D (new Vector2 (transform.position.x, transform.position.y+4), new Vector2 (down.x, down.y));
+
+		//gets the normal of the detected collider and creates newDown -> the new look direction will be based on this vector
 		RaycastHit2D hit = Physics2D.Raycast (ray.origin, ray.direction, groundDetectingDistance, whatIsGround.value);
 		Vector2 newDown = -hit.normal;
+
+		//calculates the angle between the current down vector and the new down vector
 		float angle = ((newDown.x*down.x + down.y * newDown.y) / (newDown.magnitude * down.magnitude));
 		angle = Mathf.Acos (angle); 
 		angle *= Mathf.Rad2Deg;
 
+		//calculates the angle between newDown and the xAxis to find out whether the player is walking up or down a hill 
 		if(Mathf.Acos((newDown.x*xAxis.x + xAxis.y * newDown.y) / (newDown.magnitude * xAxis.magnitude))*Mathf.Rad2Deg < 90){
 			//Debug.Log ("direction of newDown is negative");
 			//Debug.Log ("angle with xAxis: " + Mathf.Acos((newDown.x*xAxis.x + xAxis.y * newDown.y) / (newDown.magnitude * xAxis.magnitude))*Mathf.Rad2Deg);
-			Vector3 hitPoint = new Vector3(hit.point.x, hit.point.y, 0);
+			//Vector3 hitPoint = new Vector3(hit.point.x, hit.point.y, 0);
 			//Debug.DrawLine (new Vector3(hit.point.x -20, hit.point.y, 0), hitPoint + 20 * xAxis, Color.white);
 			angle = -angle;
 		}
 
+		//rotates the player if ground is flat enough
 		if (Mathf.Abs (angle) < 70 && angle != 0) {
 
 			Vector3 newLookDirection = new Vector3(newDown.y, -newDown.x, 0);
 			//Debug.Log ("newLookDirection:" + newLookDirection);
+
+			//the following didn't work but I kept it in, just in case...
 			//transform.rotation= Quaternion.LookRotation (newLookDirection, new Vector3(0, 1, 0 ));
 			//transform.eulerAngles = new Vector3 (0, 0, angle);
 			//transform.Rotate(new Vector3(0, 0, 1), angle);
@@ -128,6 +142,7 @@ public class CharacterMovement : MonoBehaviour {
 
 	}
 
+	//allows for endless jumping until the crazy upside-down-flipping-thing is under control...
 	void cheat(string button){
 		switch (button) {
 		case "j":
@@ -135,6 +150,21 @@ public class CharacterMovement : MonoBehaviour {
 			//Debug.Log ("jumpingEnabled:" + jumpingEnabled);
 			break;
 		}
+	}
+
+	//deactivates the character movement script for a second. does not take care of proper animations yet
+	private void stun(){
+		StartCoroutine ("stunning");
+		Debug.Log ("stun was called");
+	}
+
+	private IEnumerator stunning(){
+		Debug.Log ("stunning started");
+		this.enabled = false;
+		yield return new WaitForSeconds(1);
+		this.enabled = true;
+		StopCoroutine ("stunning");
+		Debug.Log ("stunning stopped");
 	}
 
 
@@ -145,12 +175,16 @@ public class CharacterMovement : MonoBehaviour {
 
 
 
-
-
-
-
-
-
+	//IGNORE THIS!!!!!!
+	//IGNORE THIS!!!!!!
+	//IGNORE THIS!!!!!!
+	//IGNORE THIS!!!!!!
+	//IGNORE THIS!!!!!!
+	//IGNORE THIS!!!!!!
+	//IGNORE THIS!!!!!!
+	//IGNORE THIS!!!!!!
+	//IGNORE THIS!!!!!!
+	//IGNORE THIS!!!!!!
 	/*void alignToGround2(){
 		deleted inspector fields
 		 * 
