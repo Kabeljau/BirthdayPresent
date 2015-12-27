@@ -101,12 +101,12 @@ public class CharacterMovement : MonoBehaviour
 			Quaternion rotQuat = Quaternion.FromToRotation(Vector3.up, hit.normal);
 			transform.rotation = Quaternion.Slerp(transform.rotation, rotQuat, 0.3f);
 			
-			Debug.Log ("grounded");
+			//Debug.Log ("grounded");
 		}
 		else
 		{
 			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.identity, 0.3f);
-			Debug.Log ("not grounded");
+			//Debug.Log ("not grounded");
 		}
     }
 

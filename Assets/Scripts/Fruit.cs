@@ -10,12 +10,11 @@ public class Fruit : MonoBehaviour {
 	private bool active;
 
 	private CircleCollider2D col;
-
-	//used to fade in and out
+	
 	private SpriteRenderer ren;
-	private Color opaque;
-	private Color transparent;
-	public float fadeSpeed;
+
+	//ap = alpha parent
+	private SpriteRenderer apRen;
 
 
 	//needed for oscillating
@@ -29,7 +28,11 @@ public class Fruit : MonoBehaviour {
 	
 
 	void Awake(){
-		ColorController.OnColorChanged += reaction;
+		if (ownColor != ColorState.noCol) {
+			ColorController.OnColorChanged += reaction;
+		}
+
+		apRen = gameObject.GetComponentInParent<SpriteRenderer> ();
 
 		col = GetComponent<CircleCollider2D> ();
 		col.isTrigger = true;
@@ -41,20 +44,16 @@ public class Fruit : MonoBehaviour {
 
 		ren = GetComponent<SpriteRenderer> ();
 
-		opaque = ren.color;
-		opaque.a = 1;
-		transparent = ren.color;
-		transparent.a = 0;
-		if (fadeSpeed == 0) {
-			Debug.Log (this + "fadeSpeed is set to zero. The object will not visibly react to the colorState!");
-		}
+
 
 	}
 	void FixedUpdate(){
 		//Debug.Log ("speed: " + speed);
 		upAndDown ();
 
-		fade ();
+
+		//whenever the alphaparent fades in or out, this sprite will do the same
+		ren.color = apRen.color;
 	}
 
 
@@ -75,28 +74,21 @@ public class Fruit : MonoBehaviour {
 	void reaction(){
 		if (ColorController.colState == ownColor) {
 			active = true;
+
+			col.enabled = true;
 		} else {
 			active = false;
+			col.enabled = false;
 		}
 	}
 
 
-	void fade(){
 
-		if (active) {
-			if (ren.color.a < 1) {
-
-
-			} 
-		} else {
-			if(ren.color.a > 0){
-
-			}
-		}
-	}
 
 	void OnDestroy(){
-		ColorController.OnColorChanged -= reaction;
+		if (ownColor != ColorState.noCol) {
+			ColorController.OnColorChanged -= reaction;
+		}
 	}
 	/*protected IEnumerator fade(float alpha, SpriteRenderer ren, float speed){
 		fadeIsRunning = true;
