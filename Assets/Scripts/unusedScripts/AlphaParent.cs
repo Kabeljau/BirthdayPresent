@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+/*
 public class AlphaParent : MonoBehaviour {
 
 	public ColorState ownColor;
@@ -46,4 +46,4 @@ public class AlphaParent : MonoBehaviour {
 		ren.color = c;
 		StopAllCoroutines ();
 	}
-}
+}*/

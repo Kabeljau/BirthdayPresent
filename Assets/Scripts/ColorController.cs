@@ -31,9 +31,7 @@ public class ColorController : MonoBehaviour {
 		col2d.isTrigger = true;
 	}
 
-	void Start(){
-		OnColorChanged ();
-	}
+
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == "Player") {
 			colState = ownColor;
