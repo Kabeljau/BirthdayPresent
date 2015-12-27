@@ -7,4 +7,4 @@ PhysicsMaterial2D:
   m_PrefabInternal: {fileID: 0}
   m_Name: PhysMat_BounceBack
   friction: .400000006
-  bounciness: 7.03000021
+  bounciness: 1.21000004

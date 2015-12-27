@@ -212,6 +212,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 10
   jumpForce: 900
+  maxRotation: 0
+  lerpRate: 0
   groundCheckLeft: {fileID: 754783113}
   groundCheckRight: {fileID: 449426230}
   whatIsGround:
