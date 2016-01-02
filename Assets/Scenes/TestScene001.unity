@@ -1212,10 +1212,22 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 481768, guid: 1ff8a33f31410444b8e4750f04a45b08, type: 2}
       propertyPath: m_RootOrder
-      value: 18
+      value: 13
       objectReference: {fileID: 0}
-    - target: {fileID: 199270, guid: 1ff8a33f31410444b8e4750f04a45b08, type: 2}
-      propertyPath: m_IsActive
+    - target: {fileID: 19901206, guid: 1ff8a33f31410444b8e4750f04a45b08, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19937880, guid: 1ff8a33f31410444b8e4750f04a45b08, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19924832, guid: 1ff8a33f31410444b8e4750f04a45b08, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19930958, guid: 1ff8a33f31410444b8e4750f04a45b08, type: 2}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
