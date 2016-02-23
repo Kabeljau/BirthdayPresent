@@ -22,6 +22,8 @@ public class CharacterMovement : MonoBehaviour
 
     private Rigidbody2D rb;
 
+	private BoxCollider2D col;
+
     private Animator animator;
 
     //fields for jumping
@@ -42,6 +44,7 @@ public class CharacterMovement : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+		col = GetComponent<BoxCollider2D> ();
         animator = GetComponent<Animator>();
 
         Enemy.OnTouchedEnemy += stun;
@@ -207,10 +210,16 @@ public class CharacterMovement : MonoBehaviour
     }
 
     //deactivates the character movement script for a second. does not take care of proper animations yet
-    private void stun()
-    {
-        StartCoroutine("stunning");
-        Debug.Log("stun was called");
+    private void stun(Enemy enemy)
+    {	
+		if (enemy.isTrap) {
+			col.enabled = false;
+			Invoke ("respawn", 1.0f);
+		} else {
+			StartCoroutine ("stunning");
+			Debug.Log ("stun was called");
+
+		}
     }
 
     private IEnumerator stunning()
@@ -223,7 +232,9 @@ public class CharacterMovement : MonoBehaviour
     }
 
 
-
+	private void respawn(){
+		Debug.Log ("respawn called");
+	}
 
 
 
