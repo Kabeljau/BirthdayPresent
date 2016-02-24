@@ -37,6 +37,9 @@ public class CharacterMovement : MonoBehaviour
     public float groundDetectingDistance;
     private Vector3 xAxis = new Vector3(1, 0, 0);
 
+	//respawn
+	public static Vector3 curSpawn;
+
     // cheats
     bool jumpingEnabled;
 
@@ -46,7 +49,7 @@ public class CharacterMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 		col = GetComponent<BoxCollider2D> ();
         animator = GetComponent<Animator>();
-
+		curSpawn = transform.position;
         Enemy.OnTouchedEnemy += stun;
     }
 
@@ -113,11 +116,7 @@ public class CharacterMovement : MonoBehaviour
 		}
     }
 
-	void OnCollisionEnter(Collision other){
-		if (other.collider.isTrigger) {
-			Debug.Log ("I hit a trigger!"); 
-		}
-	}
+
 
    /* private void LateUpdate()
     {
@@ -220,7 +219,7 @@ public class CharacterMovement : MonoBehaviour
     {	
 		if (enemy.isTrap) {
 			col.enabled = false;
-			Invoke ("respawn", 1.0f);
+			Invoke ("respawn", 3.0f);
 		} else {
 			StartCoroutine ("stunning");
 			Debug.Log ("stun was called");
@@ -239,7 +238,10 @@ public class CharacterMovement : MonoBehaviour
 
 
 	private void respawn(){
+
 		Debug.Log ("respawn called");
+		col.enabled = true;
+		transform.position = curSpawn;
 	}
 
 
