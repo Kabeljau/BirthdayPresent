@@ -84,7 +84,7 @@ public class ColorObjects : MonoBehaviour {
 		Color c = ren.color;
 		c.a = alpha;
 		Debug.Log ("coroutine fade started");
-		//while the difference is still too big
+		//while the difference is still too big, continue lerping
 		while(Mathf.Abs (ren.color.a - c.a)> 0.05f){
 			ren.color = Color.Lerp (ren.color, c, fadeSpeed);
 			Debug.Log (ren.color);
@@ -103,7 +103,11 @@ public class ColorObjects : MonoBehaviour {
 
 			yield return new WaitForSeconds(0.1f);
 		}
+
+		//set the absolute alpha value (somehow this does not work.....)
 		ren.color = c;
+
+		//the colliders have to be activated here in order not to delete an object during fading
 		if (alpha == 1.0) {
 				if(childrenAreDynamic){  //works on the list
 					foreach(Collider2D co in L_ColChildren){
@@ -115,7 +119,7 @@ public class ColorObjects : MonoBehaviour {
 				}
 			}
 		}
-		StopAllCoroutines ();
+		StopAllCoroutines ();  //I thought this would cause that there is still an alpha value of not zero when starting the game but this must be caused by something else...
 	}
 
 	/*for(var i = list.Count - 1; i > -1; i--)
