@@ -113,6 +113,12 @@ public class CharacterMovement : MonoBehaviour
 		}
     }
 
+	void OnCollisionEnter(Collision other){
+		if (other.collider.isTrigger) {
+			Debug.Log ("I hit a trigger!"); 
+		}
+	}
+
    /* private void LateUpdate()
     {
         //Send a raycast to determine the hit ground plane
