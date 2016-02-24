@@ -219,7 +219,7 @@ public class CharacterMovement : MonoBehaviour
     {	
 		if (enemy.isTrap) {
 			col.enabled = false;
-			Invoke ("respawn", 3.0f);
+			Invoke ("respawn", 2.0f);
 		} else {
 			StartCoroutine ("stunning");
 			Debug.Log ("stun was called");
