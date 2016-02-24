@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae093533ad4ccd34b9fa79b922e9ca5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTrap: 1
+  isTrap: 0
   fruitParticles: {fileID: 199270, guid: 1ff8a33f31410444b8e4750f04a45b08, type: 2}
   collisionForce: 2000
 --- !u!212 &21274636

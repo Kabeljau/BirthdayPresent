@@ -3,10 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - red_fruit
-  - green_fruit
-  - blue_fruit
+  tags: []
   layers:
   - Default
   - TransparentFX
