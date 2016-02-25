@@ -117,28 +117,6 @@ public class CharacterMovement : MonoBehaviour
     }
 
 
-
-   /* private void LateUpdate()
-    {
-        //Send a raycast to determine the hit ground plane
-        if (grounded)
-        {
-            Ray2D ray = new Ray2D(transform.position + Vector3.up * 0.2f, -Vector3.up);
-            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, groundDetectingDistance, whatIsGround.value);
-            //Debug.DrawRay(transform.position, hit.normal, Color.red);
-
-            Quaternion rotQuat = Quaternion.FromToRotation(Vector3.up, hit.normal);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotQuat, 0.3f);
-
-			Debug.Log ("grounded");
-        }
-        else
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.identity, 0.3f);
-			Debug.Log ("not grounded");
-        }
-    }*/
-
     //flips the character for walking left/right
     void flip()
     {
@@ -149,58 +127,6 @@ public class CharacterMovement : MonoBehaviour
         transform.localScale = scale;
     }
 
-    //void alignToGround(){
-
-    //    //sends a raycast from the player down to the collider
-    //    Vector3 down = -transform.up;
-    //    Ray2D ray = new Ray2D (new Vector2 (transform.position.x, transform.position.y+4), new Vector2 (down.x, down.y));
-
-    //    //gets the normal of the detected collider and creates newDown -> the new look direction will be based on this vector
-    //    RaycastHit2D hit = Physics2D.Raycast (ray.origin, ray.direction, groundDetectingDistance, whatIsGround.value);
-    //    Vector2 newDown = -hit.normal;
-
-    //    //calculates the angle between the current down vector and the new down vector
-    //    float angle = ((newDown.x*down.x + down.y * newDown.y) / (newDown.magnitude * down.magnitude));
-    //    angle = Mathf.Acos (angle); 
-    //    angle *= Mathf.Rad2Deg;
-
-    //    //calculates the angle between newDown and the xAxis to find out whether the player is walking up or down a hill 
-    //    if(Mathf.Acos((newDown.x*xAxis.x + xAxis.y * newDown.y) / (newDown.magnitude * xAxis.magnitude))*Mathf.Rad2Deg < 90){
-    //        //Debug.Log ("direction of newDown is negative");
-    //        //Debug.Log ("angle with xAxis: " + Mathf.Acos((newDown.x*xAxis.x + xAxis.y * newDown.y) / (newDown.magnitude * xAxis.magnitude))*Mathf.Rad2Deg);
-    //        //Vector3 hitPoint = new Vector3(hit.point.x, hit.point.y, 0);
-    //        //Debug.DrawLine (new Vector3(hit.point.x -20, hit.point.y, 0), hitPoint + 20 * xAxis, Color.white);
-    //        angle = -angle;
-    //    }
-
-    //    //rotates the player if ground is flat enough
-    //    if (Mathf.Abs (angle) < 70 && angle != 0) {
-
-    //        Vector3 newLookDirection = new Vector3(newDown.y, -newDown.x, 0);
-    //        //Debug.Log ("newLookDirection:" + newLookDirection);
-
-    //        //the following didn't work but I kept it in, just in case...
-    //        //transform.rotation= Quaternion.LookRotation (newLookDirection, new Vector3(0, 1, 0 ));
-    //        //transform.eulerAngles = new Vector3 (0, 0, angle);
-    //        //transform.Rotate(new Vector3(0, 0, 1), angle);
-    //        //transform.Rotate (new Vector3(0, 0, angle));
-    //        //transform.Rotate (0, 0, angle);
-    //        //transform.Rotate (new Vector3(0, 0, angle));
-
-    //        Quaternion rot = transform.rotation;
-    //        rot.SetLookRotation (newLookDirection);
-    //        //transform.rotation = rot;
-    //        //Debug.DrawLine (transform.position, new Vector3(transform.position.x + newLookDirection.x * 1000, transform.position.y + newLookDirection.y * 1000, 0), Color.blue); 
-    //    }
-
-
-    ////	Debug.Log ("angle: " + angle);
-    //    //Debug.DrawLine (transform.position, new Vector3(transform.position.x + down.x * 1000, transform.position.y + down.y * 1000, 0), Color.red); //the normal vector of the character
-    //    //Debug.DrawLine (transform.position, new Vector3(transform.position.x + newDown.x * 1000, transform.position.y + newDown.y * 1000, 0), Color.green); //the normal vector of the ground
-
-
-
-    //}
 
     //allows for endless jumping until the crazy upside-down-flipping-thing is under control...
     void cheat(string button)
@@ -259,6 +185,65 @@ public class CharacterMovement : MonoBehaviour
     //IGNORE THIS!!!!!!
     //IGNORE THIS!!!!!!
     //IGNORE THIS!!!!!!
+
+
+	
+	//void alignToGround(){
+	
+	//    //sends a raycast from the player down to the collider
+	//    Vector3 down = -transform.up;
+	//    Ray2D ray = new Ray2D (new Vector2 (transform.position.x, transform.position.y+4), new Vector2 (down.x, down.y));
+	
+	//    //gets the normal of the detected collider and creates newDown -> the new look direction will be based on this vector
+	//    RaycastHit2D hit = Physics2D.Raycast (ray.origin, ray.direction, groundDetectingDistance, whatIsGround.value);
+	//    Vector2 newDown = -hit.normal;
+	
+	//    //calculates the angle between the current down vector and the new down vector
+	//    float angle = ((newDown.x*down.x + down.y * newDown.y) / (newDown.magnitude * down.magnitude));
+	//    angle = Mathf.Acos (angle); 
+	//    angle *= Mathf.Rad2Deg;
+	
+	//    //calculates the angle between newDown and the xAxis to find out whether the player is walking up or down a hill 
+	//    if(Mathf.Acos((newDown.x*xAxis.x + xAxis.y * newDown.y) / (newDown.magnitude * xAxis.magnitude))*Mathf.Rad2Deg < 90){
+	//        //Debug.Log ("direction of newDown is negative");
+	//        //Debug.Log ("angle with xAxis: " + Mathf.Acos((newDown.x*xAxis.x + xAxis.y * newDown.y) / (newDown.magnitude * xAxis.magnitude))*Mathf.Rad2Deg);
+	//        //Vector3 hitPoint = new Vector3(hit.point.x, hit.point.y, 0);
+	//        //Debug.DrawLine (new Vector3(hit.point.x -20, hit.point.y, 0), hitPoint + 20 * xAxis, Color.white);
+	//        angle = -angle;
+	//    }
+	
+	//    //rotates the player if ground is flat enough
+	//    if (Mathf.Abs (angle) < 70 && angle != 0) {
+	
+	//        Vector3 newLookDirection = new Vector3(newDown.y, -newDown.x, 0);
+	//        //Debug.Log ("newLookDirection:" + newLookDirection);
+	
+	//        //the following didn't work but I kept it in, just in case...
+	//        //transform.rotation= Quaternion.LookRotation (newLookDirection, new Vector3(0, 1, 0 ));
+	//        //transform.eulerAngles = new Vector3 (0, 0, angle);
+	//        //transform.Rotate(new Vector3(0, 0, 1), angle);
+	//        //transform.Rotate (new Vector3(0, 0, angle));
+	//        //transform.Rotate (0, 0, angle);
+	//        //transform.Rotate (new Vector3(0, 0, angle));
+	
+	//        Quaternion rot = transform.rotation;
+	//        rot.SetLookRotation (newLookDirection);
+	//        //transform.rotation = rot;
+	//        //Debug.DrawLine (transform.position, new Vector3(transform.position.x + newLookDirection.x * 1000, transform.position.y + newLookDirection.y * 1000, 0), Color.blue); 
+	//    }
+	
+	
+	////	Debug.Log ("angle: " + angle);
+	//    //Debug.DrawLine (transform.position, new Vector3(transform.position.x + down.x * 1000, transform.position.y + down.y * 1000, 0), Color.red); //the normal vector of the character
+	//    //Debug.DrawLine (transform.position, new Vector3(transform.position.x + newDown.x * 1000, transform.position.y + newDown.y * 1000, 0), Color.green); //the normal vector of the ground
+	
+	
+	
+	//}
+
+
+
+
     /*void alignToGround2(){
         deleted inspector fields
          * 
