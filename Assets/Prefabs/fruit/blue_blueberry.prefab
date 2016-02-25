@@ -13,7 +13,7 @@ GameObject:
   - 114: {fileID: 11408928}
   m_Layer: 0
   m_Name: blue_blueberry
-  m_TagString: blue_fruit
+  m_TagString: fruit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,8 +54,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01774ba898985e34a8186701529df0e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ownColor: 2
-  fadeSpeed: .200000003
   yLimit: .389999986
   speed: 2.28999996
 --- !u!212 &21201478

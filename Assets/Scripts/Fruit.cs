@@ -13,7 +13,6 @@ public class Fruit : MonoBehaviour {
 	public float speed;
 	private float delay;
 
-	
 
 	void Awake(){
 
@@ -22,7 +21,6 @@ public class Fruit : MonoBehaviour {
 
 		pos = transform.position;
 		pos1 = transform.position;
-
 		delay = Random.Range (0.0f, 0.6f);
 
 
@@ -40,6 +38,8 @@ public class Fruit : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == "Player") {
+			
+			GameManager.s.score += 1;
 			Destroy(this.gameObject);
 		}
 	}
