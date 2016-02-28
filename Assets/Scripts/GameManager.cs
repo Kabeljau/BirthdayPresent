@@ -28,11 +28,10 @@ public class GameManager : MonoBehaviour {
 	
 	private int maxScore;
 	
-	public GameObject GOscore;
-	
 	public Text Tscore;
 
-	public GameObject Endscreen;
+	//everything that will be shown when the level is finished
+	private GameObject[] GOendscreen;
 	public Text TfruitCollected;
 	public Text TmaxFruit;
 	
@@ -42,15 +41,19 @@ public class GameManager : MonoBehaviour {
 	
 	void Start(){
 		score = 0;
-		
+
+		GOendscreen = GameObject.FindGameObjectsWithTag("Endscreen");
+
 		GameObject[] fruit = GameObject.FindGameObjectsWithTag ("Fruit");
+
 		maxScore = fruit.Length;
-		Debug.Log ("maxScore: " + fruit.Length);
-		Endscreen.SetActive (false);
+
+		foreach (GameObject GO in GOendscreen) {
+			GO.SetActive(false);
+		}
 	}
 	
 	private void setScore(){
-		Debug.Log ("setScore was called, score is now: " + score);
 		Tscore.text = "" + score;
 	}
 
@@ -63,10 +66,11 @@ public class GameManager : MonoBehaviour {
 	private void levelFinished(){
 		TfruitCollected.text = "" + score;
 		TmaxFruit.text = "" + maxScore;
-		Endscreen.SetActive (true);
+		foreach (GameObject GO in GOendscreen) {
+			GO.SetActive(true);
+		}
 	}
 
-	public void changeScene(int index){
-		Application.LoadLevel (index);
-	}
+
+
 }
