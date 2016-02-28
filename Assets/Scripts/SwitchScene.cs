@@ -3,8 +3,8 @@ using System.Collections;
 
 public class SwitchScene : MonoBehaviour {
 
-	public void changeScene(int index){
-		Application.LoadLevel (index);
+	public void changeScene(string sceneName){
+		Application.LoadLevel (sceneName);
 	}
 
 	public void quitGame(){

@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == "Player") {
 			levelFinished();
+			other.GetComponent<CharacterMovement>().enabled = false;
 		}
 	}
 
