@@ -13,7 +13,7 @@ public class Fruit : MonoBehaviour {
 	public float speed;
 	private float delay;
 
-
+	public AudioClip pickUp;
 	void Awake(){
 
 		col = GetComponent<CircleCollider2D> ();
@@ -38,7 +38,9 @@ public class Fruit : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == "Player") {
-			
+			AudioSource a = other.GetComponent<AudioSource>();
+			a.clip = pickUp;
+			a.Play ();
 			GameManager.s.score += 1;
 			Destroy(this.gameObject);
 		}

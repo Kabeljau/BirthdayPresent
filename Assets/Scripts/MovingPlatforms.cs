@@ -14,7 +14,6 @@ public class MovingPlatforms : MonoBehaviour {
 
 	private Vector3 direction;
 
-	private Vector3 playerScale;
 
 	void Start(){
 		transform.position = pointA.position;
@@ -35,7 +34,6 @@ public class MovingPlatforms : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 
 		if (other.tag == "Player") {
-			playerScale = other.transform.localScale;
 			other.transform.parent = this.transform;
 		}
 	}
@@ -44,7 +42,6 @@ public class MovingPlatforms : MonoBehaviour {
 		if (other.tag == "Player") {
 
 			other.transform.parent = null;
-			other.transform.localScale = playerScale;
 		}
 	}
 }

@@ -55,7 +55,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yLimit: .389999986
-  speed: .209999993
+  speed: 2.28999996
+  pickUp: {fileID: 8300000, guid: 8d1ddb194d8a8fe43be8e746630867cb, type: 3}
 --- !u!212 &21208754
 SpriteRenderer:
   m_ObjectHideFlags: 1
