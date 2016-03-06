@@ -4,7 +4,7 @@ using System.Collections;
 public class Enemy : MonoBehaviour {
 
 	public bool isTrap;
-
+	public AudioClip touchPlayer;
 	public delegate void touchedEnemy(Enemy e);
 	public static event touchedEnemy OnTouchedEnemy;
 
@@ -16,6 +16,9 @@ public class Enemy : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D other){
 		if (OnTouchedEnemy != null) {
 			OnTouchedEnemy(this);
+			AudioSource au =  other.gameObject.GetComponent<AudioSource>();
+			au.clip = touchPlayer;
+			au.Play ();
 			Debug.Log (this + "collided with enemy");
 			GameObject particles = Instantiate (fruitParticles, transform.position, transform.rotation) as GameObject; 
 			Destroy (particles, 3.0f);

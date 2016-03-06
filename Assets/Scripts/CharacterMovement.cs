@@ -26,6 +26,9 @@ public class CharacterMovement : MonoBehaviour
 
     private Animator animator;
 
+	public bool isStunned;
+
+
     //fields for jumping
     public static bool grounded = true;
     public Transform groundCheckLeft;
@@ -50,6 +53,7 @@ public class CharacterMovement : MonoBehaviour
 		col = GetComponent<BoxCollider2D> ();
         animator = GetComponent<Animator>();
 		curSpawn = transform.position;
+		isStunned = false;
         Enemy.OnTouchedEnemy += stun;
     }
 
@@ -143,6 +147,7 @@ public class CharacterMovement : MonoBehaviour
     //deactivates the character movement script for a second. does not take care of proper animations yet
     private void stun(Enemy enemy)
     {	
+
 		if (enemy.isTrap) {
 			col.enabled = false;
 			Invoke ("respawn", 2.0f);
@@ -156,9 +161,13 @@ public class CharacterMovement : MonoBehaviour
     private IEnumerator stunning()
     {
         Debug.Log("stunning started");
+		isStunned = true;
+		animator.SetBool ("isStunned", true);
         this.enabled = false;
         yield return new WaitForSeconds(1);
         this.enabled = true;
+		isStunned = false;
+		animator.SetBool ("isStunned", false);
         Debug.Log("stunning stopped");
     }
 

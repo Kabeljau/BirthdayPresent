@@ -83,6 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTrap: 0
+  touchPlayer: {fileID: 8300000, guid: 57a93576473e3af43a8034211888b864, type: 3}
   fruitParticles: {fileID: 199270, guid: 1ff8a33f31410444b8e4750f04a45b08, type: 2}
   collisionForce: 2000
 --- !u!212 &21274636
