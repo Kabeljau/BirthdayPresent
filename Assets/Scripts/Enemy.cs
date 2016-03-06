@@ -21,4 +21,8 @@ public class Enemy : MonoBehaviour {
 			Destroy (particles, 3.0f);
 		}
 	}
+
+	public static void clearEvent(){
+		OnTouchedEnemy = null;
+	}
 }

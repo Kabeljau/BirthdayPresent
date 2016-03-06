@@ -59,4 +59,8 @@ public class ColorController : MonoBehaviour {
 		}
 	}
 
+	public static void clearEvent(){
+		OnColorChanged = null;
+	}
+
 }
